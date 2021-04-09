@@ -1,3 +1,5 @@
+/**
+//Scripted Pipeline
 node {
 	stage('Build') {
 		echo "Build"
@@ -7,5 +9,28 @@ node {
 	}
 	stage('Integration Test') {
 		echo "Integration Test"
+	}
+}
+**/
+
+// Declarative Pipeline
+pipeline {
+	agent any
+	stages {
+		stage('Build') {
+			steps {
+				echo 'Build'
+			}
+		}
+		stage('Test') {
+			steps {
+				echo 'Test'
+			}
+		}
+		stages('Integration Test') {
+			steps {
+				echo 'Integration Test'
+			}
+		}
 	}
 }
