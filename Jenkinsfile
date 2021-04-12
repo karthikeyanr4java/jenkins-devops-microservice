@@ -15,13 +15,24 @@ node {
 
 // Declarative Pipeline
 pipeline {
-	//agent any
-	agent { docker { image 'maven' } }
+	agent any
+	//agent { docker { image 'maven' } }
+	environment {
+		dockerHome = tool 'myDocker'
+		mavenHome = tool 'myMaven'
+		PATH = '$dockerHome/bin:$mavenHome/bin:$PATH'
+	}
 	stages {
 		stage('Build') {
 			steps {
 				sh 'mvn --version'
-				echo 'Build'
+				sh 'docker version'
+				echo 'PATH - $PATH'
+				echo 'BUILD Number - $env.BUILD_NUMBER'
+				echo 'BUILD ID - $env.BUILD_ID'
+				echo 'JOB Name - $env.JOB_NAME'
+				echo 'BUILD Tag - $env.BUILD_TAG'
+				echo 'BUILD URL - $env.BUILD_URL'
 			}
 		}
 		stage('Test') {
